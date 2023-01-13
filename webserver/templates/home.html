@@ -7,42 +7,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
 
-    <title>Sveglia</title>
+    <title>Snacks</title>
 </head>
 
 <body>
+    <form>
+        <h1>Create a new snack routine!</h1>
+        <h5>Choose when to dispense the snacks: </h5> 
 
+        <input id="appt-time" type="time" name="appt-time" value="08:00">
+        <button onclick="return send()">SNACK!</button>
+    </form>
+
+    <hr>
+
+    <h5>Dispense a snack now!</h5> 
+    <a href="/dispense_now/" class="button">Dispense now!</a> 
+    <br>
+
+    
     <style>
         * {
             font-size: large;
         }
-    </style>
-    {% for alarm in page.alarms %}
-    Running clock {{ alarm.i }}: {{ alarm.frequency }} <br>
-    {% endfor %}
-
-    <a href="/removeall">Remove All</a> <br>
+        a:link { color:white }
+        a:visited { color:white }
+        </style>
 
 
-    <form>
-        <label for="appt-time">Choose an appointment time: </label>
-        <input id="appt-time" type="time" name="appt-time" value="08:00">
-        <button onclick="return send()">SVEGLIA</button>
-    </form>
-    <!-- <a href="/sveglie/8">Per svegliarsi alle 8</a> <br>
-    <a href="/sveglie/10">Per svegliarsi alle 10</a> <br>
-    <a href="/sveglie/12">Per svegliarsi alle 12</a> <br>
-    <a href="/sveglie/13">Per svegliarsi alle 13</a> <br> -->
-    <!-- <a href="/removeall">ciao</a> -->
+
+    {% if (page.alarms)|length > 0 %}
+        <hr>
+        <h5>This are the active routines!</h5> 
+
+        {% for alarm in page.alarms %}
+        <blockquote>
+            A snack will be dispensed at: {{ alarm.frequency }}  &nbsp
+            <a href="/remove_snack/{{ alarm.id }}" class="button">Remove</a> <br>
+        </blockquote>
+        {% endfor %}
+
+        {% if (page.alarms)|length > 1 %}
+        <a href="/removeall" class="button">Remove All</a> <br>
+        {% endif %}
+
+    {% endif %}
+
 </body>
 
 <script>
     function send() {
         var timeControl = document.querySelector('input[type="time"]');
 
-
-        console.log("/sveglie/" + parseInt(timeControl.value.slice(0, 2) * 60) + parseInt(timeControl.value.slice(3)))
-        window.location.replace("/sveglie/" + (parseInt(timeControl.value.slice(0, 2) * 60) + parseInt(timeControl.value.slice(3))));
+        console.log("/set_snack/" + parseInt(timeControl.value.slice(0, 2) * 60) + parseInt(timeControl.value.slice(3)))
+        window.location.replace("/set_snack/" + (parseInt(timeControl.value.slice(0, 2) * 60) + parseInt(timeControl.value.slice(3))));
         return false;
     }
 </script>

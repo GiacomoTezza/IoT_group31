@@ -1,2 +1,3 @@
 flask
-crontab
+python-crontab
+cron-descriptor

@@ -1,7 +1,8 @@
 from flask import Flask, redirect, send_from_directory, render_template
 from crontab import CronTab, time
 from time import sleep
-import time
+from time import time as unixtime
+from os import system
 
 app = Flask(__name__)
 cron = CronTab(user='pi')
@@ -19,20 +20,24 @@ def removeall():
     return redirect('/')
 
 
-# @app.route('/remove/<time>')
-# def remove(time):
-#     cron.remove(cron.find_time(time))
-#     cron.write()
-#     return redirect('/')
+@app.route('/remove_snack/<id>')
+def remove_snack(id):
+    cron.remove_all(comment=id)
+    cron.write()
+    return redirect('/')
+
+@app.route('/dispense_now/')
+def dispense_now(id):
+    system('python /home/pi/Iot_group31/webserver/sendSignal.py')
+    return redirect('/')
 
 
-@app.route('/sveglie/<t>')
-def sveglie(t):
+@app.route('/set_snack/<t>')
+def set_snack(t):
     t = int(t)
-    for i in range(3):
-        job = cron.new(
-            command='python /home/pi/Iot_group31/webserver/sendSignal.py')
-        job.setall(time(((t - 15*i) // 60), ((t - 15*i) % 60)))
+
+    job = cron.new(command='python /home/pi/Iot_group31/webserver/sendSignal.py', comment=str(unixtime()))
+    job.setall(time((t// 60), (t % 60)))
 
     cron.write()
 
@@ -45,17 +50,19 @@ def home():
     for i, item in enumerate(cron):
         alarms.append({
             'i': i,
-            'frequency': item.description(use_24hour_time_format=True),
-            'time': item
+            'frequency': item.description(use_24hour_time_format=True)[3:],
+            'time': item,
+            'id': item.comment
         })
 
     page = {
         'alarms': alarms
     }
+
     cron.write()
 
     return render_template('home.html', page=page)
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
