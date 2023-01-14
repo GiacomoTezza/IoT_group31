@@ -14,6 +14,6 @@ lorem ipsum
 ## Links
 powerpoint video ecc
 ## Team Members
-Marcon Daniel
-Tezza Giacomo
-Conti Nicola 
+- Conti Nicola 
+- Marcon Daniel
+- Tezza Giacomo
