@@ -1,4 +1,11 @@
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except:
+    from random import random
+    with open('log.txt', 'w') as f:
+        f.write(str(random()))
+    exit(0)
+    
 from time import sleep
 
 pin = 11

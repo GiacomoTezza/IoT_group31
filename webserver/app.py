@@ -2,10 +2,11 @@ from flask import Flask, redirect, send_from_directory, render_template
 from crontab import CronTab, time
 from time import sleep
 from time import time as unixtime
-from os import system
+from os import system, getlogin, getcwd
 
 app = Flask(__name__)
-cron = CronTab(user='pi')
+cron = CronTab(user=getlogin())
+
 
 
 @app.route('/')
@@ -27,8 +28,9 @@ def remove_snack(id):
     return redirect('/')
 
 @app.route('/dispense_now/')
-def dispense_now(id):
-    system('python /home/pi/Iot_group31/webserver/sendSignal.py')
+def dispense_now():
+    print(getcwd())
+    system(f'python {getcwd()}/sendSignal.py')
     return redirect('/')
 
 
@@ -36,7 +38,7 @@ def dispense_now(id):
 def set_snack(t):
     t = int(t)
 
-    job = cron.new(command='python /home/pi/Iot_group31/webserver/sendSignal.py', comment=str(unixtime()))
+    job = cron.new(command=f'python {getcwd()}/sendSignal.py', comment=str(unixtime()))
     job.setall(time((t// 60), (t % 60)))
 
     cron.write()
@@ -49,12 +51,11 @@ def home():
     alarms = []
     for i, item in enumerate(cron):
         alarms.append({
-            'i': i,
             'frequency': item.description(use_24hour_time_format=True)[3:],
-            'time': item,
             'id': item.comment
         })
 
+    alarms.sort(key=lambda x: x['frequency'].split(":")[0] * 60 + x['frequency'].split(":")[1])
     page = {
         'alarms': alarms
     }

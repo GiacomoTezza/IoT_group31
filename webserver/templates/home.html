@@ -7,52 +7,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
 
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
     <title>Snacks</title>
 </head>
 
 <body>
-    <form>
-        <h1>Create a new snack routine!</h1>
-        <h5>Choose when to dispense the snacks: </h5> 
+    <h1>Create a new snack routine!</h1>
+    <div class="container">
+        <div class="item">
+            <form>
+                <h5>Choose when to dispense the snacks: </h5>
+                <div class="container">
+                    <input id="appt-time" type="time" name="appt-time" value="08:00" required>
+                    <button onclick="return send()">SNACK!</button>
+                </div>
+            </form>
+        </div>
 
-        <input id="appt-time" type="time" name="appt-time" value="08:00">
-        <button onclick="return send()">SNACK!</button>
-    </form>
+        <div class="item" style="width: 1px; height: 50px; background-color: black;"></div>
 
-    <hr>
+        <div class="item">
+            <h5>Dispense a snack now!</h5>
+            <div class="container">
+                <button onclick="dispense()">Dispense now!</button>
+                <!-- <a href="/dispense_now/" class="button">Dispense now!</a> -->
+            </div>
+            <br>
+        </div>
+    </div>
 
-    <h5>Dispense a snack now!</h5> 
-    <a href="/dispense_now/" class="button">Dispense now!</a> 
-    <br>
-
-    
-    <style>
-        * {
-            font-size: large;
-        }
-        a:link { color:white }
-        a:visited { color:white }
-        </style>
-
-
+    <br><hr>
 
     {% if (page.alarms)|length > 0 %}
-        <hr>
-        <h5>This are the active routines!</h5> 
-
-        {% for alarm in page.alarms %}
-        <blockquote>
-            A snack will be dispensed at: {{ alarm.frequency }}  &nbsp
-            <a href="/remove_snack/{{ alarm.id }}" class="button">Remove</a> <br>
-        </blockquote>
-        {% endfor %}
+        <h5>This are the active routines!</h5>
 
         {% if (page.alarms)|length > 1 %}
         <a href="/removeall" class="button">Remove All</a> <br>
         {% endif %}
 
+        {% for alarm in page.alarms %}
+        <blockquote >
+            A snack will be dispensed at: {{ alarm.frequency }} &nbsp
+            <a href="/remove_snack/{{ alarm.id }}" class="button">Remove</a> <br>
+        </blockquote>
+        {% endfor %}
+    {% else %}
+        <h5>There are currently no active routines!</h5>
     {% endif %}
 
+
+
+
+    <style>
+        * {
+            font-size: large;
+            text-align: center;
+            /* outline: 1px solid red; */
+        }
+
+        a:link {
+            color: white
+        }
+
+        a:visited {
+            color: white
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .item {
+            width: 40%;
+            margin: auto;
+        }
+    </style>
 </body>
 
 <script>
@@ -63,6 +96,24 @@
         window.location.replace("/set_snack/" + (parseInt(timeControl.value.slice(0, 2) * 60) + parseInt(timeControl.value.slice(3))));
         return false;
     }
+
+    function dispense() {
+        fetch(window.location.href.slice(0, -5) + "/dispense_now")
+        .then((response) => {
+                console.log("Snack dispensed!")
+                alertify.notify('Snack dispensed!', 'success', 5);
+        })
+        .catch((error) => {
+            alertify.notify('An error occurred!', 'error', 5);
+        });
+    }
+
+    var now = new Date();
+    var timeControl = document.querySelector('input[type="time"]');
+    var minute = now.getMinutes();               
+    if (minute < 10) 
+        minute = "0" + minute;
+    timeControl.value = now.getHours() + ":" + minute;
 </script>
 
 </html>
