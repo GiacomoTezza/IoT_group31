@@ -8,7 +8,7 @@ except:
     
 from time import sleep
 
-pin = 11
+pin = 21
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pin, GPIO.OUT)
