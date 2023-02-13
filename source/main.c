@@ -10,7 +10,7 @@ int main(void) {
     GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
 
     /* P1.6 as input */
-    GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P1, GPIO_PIN6);
+    GPIO_setAsInputPinWithPullDownResistor(GPIO_PORT_P1, GPIO_PIN6);
     GPIO_enableInterrupt(GPIO_PORT_P1, GPIO_PIN6);
 
     /* P1.4 as input for button DEBUG ONLY*/
