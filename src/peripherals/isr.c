@@ -22,7 +22,7 @@ void PORT1_IRQHandler(void) {
         }
         GPIO_toggleOutputOnPin(GPIO_PORT_P1, GPIO_PIN0);
 
-        moveServo(90);
+        moveServo(60);
         delayMs(500);
         moveServo(0);
     }

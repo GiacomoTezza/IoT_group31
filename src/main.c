@@ -14,8 +14,6 @@ void _hw_init(void) {
 int main(void) {
     _hw_init();
 
-    moveServo(30);
-    delayMs(100);
     moveServo(0);
 
     while(1) {
