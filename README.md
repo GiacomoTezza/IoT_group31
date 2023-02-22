@@ -16,9 +16,9 @@ The following features have been implemented and tested on the board.
 
 ## Authors
 
-Marcon Daniel - Software development, webserver
-Tezza Giacomo - Software development, presentation
-Conti Nicola - None
+- Marcon Daniel - Software development, webserver
+- Tezza Giacomo - Software development, presentation
+- Conti Nicola - Software development, presentation
 
 # Requirements
 
