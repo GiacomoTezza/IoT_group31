@@ -55,26 +55,27 @@ To compile and execute Embedded Smart Feeder on your TI launchpad, follow the st
 <!-- - Modify Arm Linker > File Search Path in project properties by adding DriverLib and GrLib object files as follows:
 `~\driver\source\ti\grlib\lib\ccs\m4f\grlib.a`  
 `~\driver\source\ti\devices\msp432p4xx\driverlib\ccs\msp432p4xx_driverlib.lib` -->
-- Build and burn the project to the board. Enjoy! 
+- Build and flash the project to the board
 
 ## WebServer
 
 To setup and run the webserver, follow the steps:
 
-Go to the previously cloned repository
+- Make sure to have python 3.6+ installed
+- Go to the previously cloned repository
 ```
 cd IoT_group31/
 ```
-You can optionally start a virtual enviroment (you will need to install also virtualenv or you can use the one you prefer)
+- You can optionally start a virtual enviroment (you will need to install also virtualenv or you can use the one you prefer)
 ```
 virtualenv venv
 source venv/bin/activate
 ```
-Install dependencies
+- Install dependencies
 ```
 pip install -r webserver/requirements.txt
 ```
-Run the application
+- Run the application
 ```
 python webserver/app.py
 ```

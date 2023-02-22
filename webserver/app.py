@@ -4,6 +4,7 @@ from time import sleep
 from time import time as unixtime
 from os import system, getlogin, getcwd
 
+
 app = Flask(__name__)
 cron = CronTab(user=getlogin())
 
@@ -13,7 +14,7 @@ cron = CronTab(user=getlogin())
 def root():
     return redirect("/home")
 
-
+# Removes all cron entries
 @app.route('/removeall')
 def removeall():
     cron.remove_all()
@@ -21,19 +22,21 @@ def removeall():
     return redirect('/')
 
 
+# Removes a specific cron entry specified by the id value
 @app.route('/remove_snack/<id>')
 def remove_snack(id):
     cron.remove_all(comment=id)
     cron.write()
     return redirect('/')
 
+# Dispenses a snack
 @app.route('/dispense_now/')
 def dispense_now():
     print(getcwd())
     system(f'python {getcwd()}/sendSignal.py')
     return redirect('/')
 
-
+# Creates a cron job for dispensing the snack
 @app.route('/set_snack/<t>')
 def set_snack(t):
     t = int(t)
