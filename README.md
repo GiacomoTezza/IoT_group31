@@ -2,7 +2,7 @@
 
 Embedded Smart Feeder is a smart pet feeder that can automatize the food erogation for your pet. It allows you to schedule meals at specific time of the day and the feeder will dispense the correct dose of food autonomusly.
 
-<img src="https://imgur.com/Tg8Y91F" width="500px">
+![Inside](https://i.imgur.com/thVOqGj.jpg)
 
 ## Features
 
@@ -128,7 +128,7 @@ GPIO.output(pin, 0)
 The Pulse-Width Modulation uses the width of a pulse to modulate an amplitude, that reflects the duty cycle, which describes the proportion of the high state in one pulse period.
 It's used to move the servo the needed angle, converting a value from 0 to 180 degrees, to a time period that the servo needs to move to get to that angle.
 
-<img src="https://imgur.com/thVOqGj" width="500px">
+![pwm](https://i.imgur.com/Tg8Y91F.jpg)
 
 The PWM signal produced should have a frequency of 50Hz that is the PWM period should be 20ms.
 Out of which the On-Time can vary from 1ms to 2ms.
