@@ -16,7 +16,7 @@ The following features have been implemented and tested on the board.
 
 ## Demo
 
-A video demonstration of the project is available on [YouTube](link).
+A video demonstration of the project is available on [YouTube](https://www.youtube.com/playlist?list=PLDc6qaqn1_iXD7BgPODJwvfgZr5sRzeQW).
 A brief presentation is available on [Google Slides](https://docs.google.com/presentation/d/1O1WLHBDQUMl41cEYhrukCoQteXkMGJ9-R98tLyEIqY4/edit?usp=sharing).
 
 ## Authors
